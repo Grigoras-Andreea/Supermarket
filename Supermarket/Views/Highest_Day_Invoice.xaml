@@ -23,9 +23,7 @@ FontFamily="Arial Black"/>
     Height="35" Width="250" Background="#FFD04EAF"
     FontFamily="Arial" Command="{Binding ShowHighestInvoiceCommand}">
             <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource dateConverter}">
-                    <Binding ElementName="date" Path="Text"/>
-                </MultiBinding>
+                <Binding ElementName="date" Path="Text" Converter="{StaticResource dateConverter}" />
             </Button.CommandParameter>
             <Button.Template>
                 <ControlTemplate TargetType="Button">
@@ -51,11 +49,13 @@ FontFamily="Arial Black"/>
         <DataGrid Name="ResultGrid" Margin="300,153,10,96"
     AutoGenerateColumns="False"
     ScrollViewer.VerticalScrollBarVisibility="Visible"
-    ItemsSource="{Binding , UpdateSourceTrigger=PropertyChanged}"
+    ItemsSource="{Binding HighestInvoice, UpdateSourceTrigger=PropertyChanged}"
     >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Day" Binding="{Binding Item1, Mode=OneWay}"/>
-                <DataGridTextColumn Header="Sum" Binding="{Binding Item2, Mode=OneWay}"/>
+                <DataGridTextColumn Header="ID Bon" Binding="{Binding Item1, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Data Eliberare" Binding="{Binding Item2, Mode=OneWay}"/>
+                <DataGridTextColumn Header="ID Casier" Binding="{Binding Item3, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Total" Binding="{Binding Item4, Mode=OneWay}"/>
             </DataGrid.Columns>
         </DataGrid>
         <DatePicker x:Name="date" HorizontalAlignment="Left"

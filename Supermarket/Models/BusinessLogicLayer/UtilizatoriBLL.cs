@@ -73,13 +73,13 @@ namespace Supermarket.Models.BusinessLogicLayer
             return result;
         }
 
-        public ObservableCollection<Tuple<int, int>> GetSumOfUser(int an, int luna, int id)
+        public ObservableCollection<Tuple<int, double>> GetSumOfUser(int an, int luna, int id)
         {
             List<GetSumOfUserOfMonth_Result> sum = context.GetSumOfUserOfMonth(an, luna, id).ToList();
-            ObservableCollection<Tuple<int, int>> result = new ObservableCollection<Tuple<int, int>>();
+            ObservableCollection<Tuple<int, double>> result = new ObservableCollection<Tuple<int, double>>();
             foreach (var s in sum)
             {
-                result.Add(new Tuple<int, int>((int)s.Ziua, (int)s.Suma));
+                result.Add(new Tuple<int, double>((int)s.Ziua, (double)s.Suma));
             }
             return result;
         }

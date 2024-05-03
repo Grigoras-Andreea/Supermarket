@@ -17,6 +17,7 @@ namespace Supermarket.ViewModels
         private ProduseBLL produseBLL;
         private StocuriBLL stocuriBLL;
         private UtilizatoriBLL utilizatoriBLL;
+        private BonBLL bonBLL;
         private int id_producator;
 
 
@@ -28,6 +29,10 @@ namespace Supermarket.ViewModels
 
         public ICommand ShowUserSumPageCommand { get; set; }
 
+        public ICommand ShowHighestInvoiceCommand { get; set; }
+
+        public ICommand ShowHighestInvoicePageCommand { get; set; }
+
         public AdministratorSearchesVM()
         {
             SearchCompanyCommand = new RelayCommand(SearchCompany);
@@ -35,6 +40,8 @@ namespace Supermarket.ViewModels
             ShowCategoriesSumCommand = new RelayCommand(ShowCategoriesSum);
 
             ShowUserSumPageCommand = new RelayCommand(ShowUserSumPage);
+
+            ShowHighestInvoicePageCommand = new RelayCommand(ShowHighestInvoicePage);
 
 
             producatoriBLL = new ProducatoriBLL();
@@ -49,6 +56,9 @@ namespace Supermarket.ViewModels
             utilizatoriBLL = new UtilizatoriBLL();
             UserList = utilizatoriBLL.GetAllUsers();
             ShowUserSumCommand = new RelayCommand(ShowUserSum);
+
+            bonBLL = new BonBLL();
+            ShowHighestInvoiceCommand = new RelayCommand(ShowHighestInvoice);
         }
 
         public ObservableCollection<Tuple<int, string>> CompaniesList { get; private set; }
@@ -63,14 +73,25 @@ namespace Supermarket.ViewModels
             }
         }
 
-        private ObservableCollection<Tuple<int, int>> userSum;
-        public ObservableCollection<Tuple<int, int>> UserSum
+        private ObservableCollection<Tuple<int, double>> userSum;
+        public ObservableCollection<Tuple<int, double>> UserSum
         {
             get => userSum;
             set
             {
                 userSum = value;
                 NotifyPropertyChanged("UserSum");
+            }
+        }
+
+        private ObservableCollection<Tuple<int, DateTime, int, double>> highestInvoice;
+        public ObservableCollection<Tuple<int, DateTime, int, double>> HighestInvoice
+        {
+            get => highestInvoice;
+            set
+            {
+                highestInvoice = value;
+                NotifyPropertyChanged("HighestInvoice");
             }
         }
 
@@ -116,6 +137,21 @@ namespace Supermarket.ViewModels
                 var luna = result.Item3;
                 UserSum = utilizatoriBLL.GetSumOfUser(an, luna, id);
             }
+        }
+
+        private void ShowHighestInvoice(object obj)
+        {
+            if (obj != null)
+            {
+                var date = obj as DateTime?;
+                HighestInvoice = bonBLL.GetHighestBon(date.Value);
+            }
+        }
+
+        private void ShowHighestInvoicePage(object obj)
+        {
+            var HighestInvoicePage = new Highest_Day_Invoice();
+            HighestInvoicePage.Show();
         }
     }
 }

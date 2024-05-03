@@ -79,7 +79,7 @@
         <Button Content="Cel mai mare bon" HorizontalAlignment="Center"
     Margin="0,310,0,0" VerticalAlignment="Top"
     Width="250" Height="50" Background="White"
-    Command="{Binding SearchCompanyCommand}"
+    Command="{Binding ShowHighestInvoicePageCommand}"
     >
             <Button.Template>
                 <ControlTemplate TargetType="Button">

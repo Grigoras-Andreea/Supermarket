@@ -83,6 +83,25 @@ namespace Supermarket.Models.BusinessLogicLayer
             }
             return result;
         }
+
+
+        //--------------------------------------------------------------------------------
+        public void UpdateIsActive()
+        {
+            var rowsAffected2 = context.UpdateStocuri();
+            var rowsAffected = context.UpdateOferte();
+            var rowsAffected3 = context.UpdateProduct();
+            if (rowsAffected == -1 || rowsAffected2 == -1 || rowsAffected3 == -1)
+            {
+                ErrorMessage = "An error occurred while updating the stock.";
+            }
+            else
+            {
+                ErrorMessage = "The stock was updated successfully.";
+            }
+        }
+
+        //--------------------------------------------------------------------------------
     }
 
 }

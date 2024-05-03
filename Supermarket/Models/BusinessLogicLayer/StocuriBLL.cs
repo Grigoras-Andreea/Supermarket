@@ -214,9 +214,10 @@ namespace Supermarket.Models.BusinessLogicLayer
                     // Calculate the discounted price
                     double pret_vanzare = stock.Item4;
                     double discountedPrice = pret_vanzare * (1 - highestOffer / 100.0);
+                    double stockSum = discountedPrice * cantitate;
 
                     // Add the discounted price to the total sum
-                    totalSum += discountedPrice;
+                    totalSum += stockSum;
                 }
 
                 // Add the category and total sum to the result

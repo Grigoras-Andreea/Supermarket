@@ -449,5 +449,20 @@ namespace Supermarket.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllUsers_Result>("GetAllUsers");
         }
+    
+        public virtual int UpdateOferte()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateOferte");
+        }
+    
+        public virtual int UpdateProduct()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateProduct");
+        }
+    
+        public virtual int UpdateStocuri()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateStocuri");
+        }
     }
 }

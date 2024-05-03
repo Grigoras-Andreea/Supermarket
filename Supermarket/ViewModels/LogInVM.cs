@@ -41,11 +41,13 @@ namespace Supermarket.ViewModels
             {
                 if(user.tip == "admin")
                 {
+                    utilizatorBLL.UpdateIsActive();
                     var adminWindow = new PaginaAdministrator();
                     adminWindow.Show();
                 }
                 else if (user.tip == "casier")
                 {
+                    utilizatorBLL.UpdateIsActive();
                     var userWindow = new PaginaCasier();
                     userWindow.Show();
                 }

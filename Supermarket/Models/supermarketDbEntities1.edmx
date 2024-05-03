@@ -270,6 +270,9 @@
           <Parameter Name="Parola" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SumPricesByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateOferte" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateStocuri" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="supermarketDBModelStoreContainer">
           <EntitySet Name="Bonuri" EntityType="Self.Bonuri" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Oferte" EntityType="Self.Oferte" Schema="dbo" store:Type="Tables" />
@@ -616,6 +619,9 @@
           <FunctionImport Name="GetAllOffersForSum" ReturnType="Collection(supermarketDBModel.GetAllOffersForSum_Result)" />
           <FunctionImport Name="GetAllStocksForSum" ReturnType="Collection(supermarketDBModel.GetAllStocksForSum_Result)" />
           <FunctionImport Name="GetAllUsers" ReturnType="Collection(supermarketDBModel.GetAllUsers_Result)" />
+          <FunctionImport Name="UpdateOferte" />
+          <FunctionImport Name="UpdateProduct" />
+          <FunctionImport Name="UpdateStocuri" />
         </EntityContainer>
         <ComplexType Name="GetAllProducatori_Result">
           <Property Type="Int32" Name="id_producator" Nullable="false" />
@@ -940,6 +946,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateOferte" FunctionName="supermarketDBModel.Store.UpdateOferte" />
+          <FunctionImportMapping FunctionImportName="UpdateProduct" FunctionName="supermarketDBModel.Store.UpdateProduct" />
+          <FunctionImportMapping FunctionImportName="UpdateStocuri" FunctionName="supermarketDBModel.Store.UpdateStocuri" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

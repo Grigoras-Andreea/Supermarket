@@ -464,5 +464,50 @@ namespace Supermarket.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateStocuri");
         }
+    
+        public virtual ObjectResult<GetProductsByCategory_Result> GetProductsByCategory(string category)
+        {
+            var categoryParameter = category != null ?
+                new ObjectParameter("Category", category) :
+                new ObjectParameter("Category", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByCategory_Result>("GetProductsByCategory", categoryParameter);
+        }
+    
+        public virtual ObjectResult<GetProductsByCode_Result> GetProductsByCode(string cod)
+        {
+            var codParameter = cod != null ?
+                new ObjectParameter("Cod", cod) :
+                new ObjectParameter("Cod", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByCode_Result>("GetProductsByCode", codParameter);
+        }
+    
+        public virtual ObjectResult<GetProductsByDataExpirare_Result> GetProductsByDataExpirare(Nullable<System.DateTime> dataExpirare)
+        {
+            var dataExpirareParameter = dataExpirare.HasValue ?
+                new ObjectParameter("DataExpirare", dataExpirare) :
+                new ObjectParameter("DataExpirare", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByDataExpirare_Result>("GetProductsByDataExpirare", dataExpirareParameter);
+        }
+    
+        public virtual ObjectResult<GetProductsByName_Result> GetProductsByName(string nume)
+        {
+            var numeParameter = nume != null ?
+                new ObjectParameter("Nume", nume) :
+                new ObjectParameter("Nume", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByName_Result>("GetProductsByName", numeParameter);
+        }
+    
+        public virtual ObjectResult<GetProductsByNumeProducator_Result> GetProductsByNumeProducator(string numeProducator)
+        {
+            var numeProducatorParameter = numeProducator != null ?
+                new ObjectParameter("NumeProducator", numeProducator) :
+                new ObjectParameter("NumeProducator", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByNumeProducator_Result>("GetProductsByNumeProducator", numeProducatorParameter);
+        }
     }
 }

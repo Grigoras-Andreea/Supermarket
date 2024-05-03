@@ -3,10 +3,298 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Supermarket.Views"
+        xmlns:local="clr-namespace:Supermarket.ViewModels"
+        xmlns:conv="clr-namespace:Supermarket.Converters"
         mc:Ignorable="d"
-        Title="PaginaCasier" Height="450" Width="800">
+        Title="PaginaCasier" Height="800" Width="1200">
+    <Window.DataContext>
+        <local:CasierVM/>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.Resources>
+            <conv:DateConverter x:Key="dateConverter"/>
+            <conv:StringConverter x:Key="stringConverter"/>
+        </Grid.Resources>
+        <Rectangle HorizontalAlignment="Center" Height="800" Margin="0,0,0,0" Stroke="Gray" VerticalAlignment="Center" Width="2" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+
+        <TextBox Name="numeProdus" HorizontalAlignment="Left"
+        Margin="620,80,0,0" TextWrapping="Wrap" 
+        VerticalAlignment="Top" Width="150" Height="30"
+        BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom"
+        Padding="0 0 0 1" />
+
+        <Button Content="SEARCH" HorizontalAlignment="Left"
+        Margin="620,130,0,0" VerticalAlignment="Top"
+        Width="150" Height="30"
+        Command="{Binding GetProductsByNameCommand}"
+        >
+            <Button.CommandParameter>
+                <Binding ElementName="numeProdus" Path="Text" Converter="{StaticResource stringConverter}" />
+            </Button.CommandParameter>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border1" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border1" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Label Content="Nume Produs" HorizontalAlignment="Left" Margin="620,56,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FF5B5858"/>
+        <TextBox Name="codBare" HorizontalAlignment="Left"
+        Margin="620,200,0,0" TextWrapping="Wrap" 
+        VerticalAlignment="Top" Width="150" Height="30"
+        BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom"
+        Padding="0 0 0 1" />
+        <Label Content="Cod" HorizontalAlignment="Left" Margin="620,176,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FF5B5858"/>
+
+        <Button Content="SEARCH" HorizontalAlignment="Left"
+        Margin="620,250,0,0" VerticalAlignment="Top"
+        Width="150" Height="30"
+        Command="{Binding GetProductsByCodeCommand}"
+        >
+            <Button.CommandParameter>
+                <Binding ElementName="codBare" Path="Text" Converter="{StaticResource stringConverter}" />
+            </Button.CommandParameter>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border1" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border1" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <DatePicker Name="dataExpirare" HorizontalAlignment="Left" Margin="620,320,0,0" VerticalAlignment="Top" Width="150"/>
+        <Label Content="Data Expirare" HorizontalAlignment="Left" Margin="620,296,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FF5B5858"/>
+
+        <Button Content="SEARCH" HorizontalAlignment="Left"
+        Margin="620,370,0,0" VerticalAlignment="Top"
+        Width="150" Height="30"
+                Command="{Binding GetProductsByExpiringDateCommand}"
+        >
+            <Button.CommandParameter>
+                <Binding ElementName="dataExpirare" Path="SelectedDate" Converter="{StaticResource dateConverter}" />
+            </Button.CommandParameter>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border1" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border1" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <TextBox Name="producator" HorizontalAlignment="Left"
+        Margin="620,440,0,0" TextWrapping="Wrap" 
+        VerticalAlignment="Top" Width="150" Height="30"
+        BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom"
+        Padding="0 0 0 1" />
+        <Label Content="Producator" HorizontalAlignment="Left" Margin="620,416,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FF5B5858"/>
+
+        <Button Content="SEARCH" HorizontalAlignment="Left"
+        Margin="620,490,0,0" VerticalAlignment="Top"
+        Width="150" Height="30"
+                Command="{Binding GetProductsByProducerCommand}"
+        >
+            <Button.CommandParameter>
+                <Binding ElementName="producator" Path="Text" Converter="{StaticResource stringConverter}" />
+            </Button.CommandParameter>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border1" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border1" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <TextBox Name="categorie" HorizontalAlignment="Left"
+        Margin="620,560,0,0" TextWrapping="Wrap" 
+        VerticalAlignment="Top" Width="150" Height="30"
+        BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom"
+        Padding="0 0 0 1" />
+        <Label Content="Categorie" HorizontalAlignment="Left" Margin="620,536,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FF5B5858"/>
+
+        <Button Content="SEARCH" HorizontalAlignment="Left"
+        Margin="620,610,0,0" VerticalAlignment="Top"
+        Width="150" Height="30"
+                Command="{Binding GetProductsByCategoryCommand}"
+        >
+            <Button.CommandParameter>
+                <Binding ElementName="categorie" Path="Text" Converter="{StaticResource stringConverter}" />
+            </Button.CommandParameter>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border1" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border1" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+
+        <DataGrid Name="ProducersGrid" Margin="800, 70,20,70"
+        AutoGenerateColumns="False"
+        ScrollViewer.VerticalScrollBarVisibility="Visible"
+        ItemsSource="{Binding ProductsList, UpdateSourceTrigger=PropertyChanged}"
+        >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nume" Binding="{Binding Item1, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Cod Bare" Binding="{Binding Item2, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Categorie" Binding="{Binding Item3, Mode=OneWay}"/>
+                <DataGridTextColumn Header="ID Producator" Binding="{Binding Item4, Mode=OneWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+
+
+        <TextBox Name="codBare2" HorizontalAlignment="Left"
+        Margin="69,44,0,0" TextWrapping="Wrap" 
+        VerticalAlignment="Top" Width="150" Height="30"
+        BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom"
+        Padding="0 0 0 1" />
+        <Label Content="Cod: " HorizontalAlignment="Left" Margin="30,50,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FF5B5858"/>
+
+        <Button Content="ADD" HorizontalAlignment="Left"
+        Margin="49,90,0,0" VerticalAlignment="Top"
+        Width="150" Height="30"
+        Command="{Binding GetProductsByCodeCommand}"
+        >
+            <Button.CommandParameter>
+                <Binding ElementName="codBare" Path="Text" Converter="{StaticResource stringConverter}" />
+            </Button.CommandParameter>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border1" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border1" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <DataGrid Name="ShoppingListGrid" Margin="49,145,675,399"
+        AutoGenerateColumns="False"
+        ScrollViewer.VerticalScrollBarVisibility="Visible"
+        ItemsSource="{Binding ProductsList, UpdateSourceTrigger=PropertyChanged}"
+        >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID Produs" Binding="{Binding Item1, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Produs" Binding="{Binding Item2, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Pret" Binding="{Binding Item3, Mode=OneWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Finish" HorizontalAlignment="Left"
+        Margin="375,408,0,0" VerticalAlignment="Top"
+        Width="150" Height="30"
+        Command="{Binding GetProductsByCodeCommand}"
+        >
+            <Button.CommandParameter>
+                <Binding ElementName="codBare" Path="Text" Converter="{StaticResource stringConverter}" />
+            </Button.CommandParameter>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border1" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border1" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <DataGrid Name="FinishedShoppingListGrid" Margin="49,455,675,90"
+        AutoGenerateColumns="False"
+        ScrollViewer.VerticalScrollBarVisibility="Visible"
+        ItemsSource="{Binding ProductsList, UpdateSourceTrigger=PropertyChanged}"
+        >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Produs" Binding="{Binding Item1, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Cantitate" Binding="{Binding Item2, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Subtotal" Binding="{Binding Item3, Mode=OneWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock HorizontalAlignment="Left"
+                   Margin="49,699,0,0"
+                   TextWrapping="Wrap"
+                   Text="Total  .............................................................."
+                   VerticalAlignment="Top" Height="37" Width="370"
+                   FontSize="25"
+                   />
+        <TextBlock HorizontalAlignment="Left" Margin="424,699,0,0"
+                   TextWrapping="Wrap" Text="100,45"
+                   VerticalAlignment="Top"
+                   Height="37" Width="101"
+                   FontSize="25"
+                   />
+
     </Grid>
 </Window>

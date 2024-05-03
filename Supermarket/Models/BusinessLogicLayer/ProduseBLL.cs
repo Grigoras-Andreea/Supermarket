@@ -111,6 +111,59 @@ namespace Supermarket.Models.BusinessLogicLayer
             return result;
         }
 
-        
+        public ObservableCollection<Tuple<string, string, string, int>> GetAllProductsByName(string nume)
+        {
+            List<GetProductsByName_Result> produse = context.GetProductsByName(nume).ToList();
+            ObservableCollection<Tuple<string, string, string, int>> result = new ObservableCollection<Tuple<string, string, string, int>>();
+            foreach (var produs in produse)
+            {
+                result.Add(new Tuple<string, string, string, int>(produs.nume, produs.cod_bare, produs.categorie, produs.id_producator));
+            }
+            return result;
+        }
+
+        public ObservableCollection<Tuple<string, string, string, int>> GetAllProductsByCategory(string categorie)
+        {
+            List<GetProductsByCategory_Result> produse = context.GetProductsByCategory(categorie).ToList();
+            ObservableCollection<Tuple<string, string, string, int>> result = new ObservableCollection<Tuple<string, string, string, int>>();
+            foreach (var produs in produse)
+            {
+                result.Add(new Tuple<string, string, string, int>(produs.nume, produs.cod_bare, produs.categorie, produs.id_producator));
+            }
+            return result;
+        }
+
+        public ObservableCollection<Tuple<string, string, string, int>> GetAllProductsByDataExpirare(DateTime data_expirare)
+        {
+            List<GetProductsByDataExpirare_Result> produse = context.GetProductsByDataExpirare(data_expirare).ToList();
+            ObservableCollection<Tuple<string, string, string, int>> result = new ObservableCollection<Tuple<string, string, string, int>>();
+            foreach (var produs in produse)
+            {
+                result.Add(new Tuple<string, string, string, int>(produs.nume, produs.cod_bare, produs.categorie, produs.id_producator));
+            }
+            return result;
+        }
+
+        public ObservableCollection<Tuple<string, string, string, int>> GetAllProductsByCompany(string numeCompanie)
+        {
+            List<GetProductsByNumeProducator_Result> produse = context.GetProductsByNumeProducator(numeCompanie).ToList();
+            ObservableCollection<Tuple<string, string, string, int>> result = new ObservableCollection<Tuple<string, string, string, int>>();
+            foreach (var produs in produse)
+            {
+                result.Add(new Tuple<string, string, string, int>(produs.nume, produs.cod_bare, produs.categorie, produs.id_producator));
+            }
+            return result;
+        }
+
+        public ObservableCollection<Tuple<string, string, string, int>> GetAllProductsByCode(string code)
+        {
+            List<GetProductsByCode_Result> produse = context.GetProductsByCode(code).ToList();
+            ObservableCollection<Tuple<string, string, string, int>> result = new ObservableCollection<Tuple<string, string, string, int>>();
+            foreach (var produs in produse)
+            {
+                result.Add(new Tuple<string, string, string, int>(produs.nume, produs.cod_bare, produs.categorie, produs.id_producator));
+            }
+            return result;
+        }
     }
 }

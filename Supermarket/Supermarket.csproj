@@ -248,6 +248,7 @@
     <Compile Include="Converters\DateConverter.cs" />
     <Compile Include="Converters\DeleteConverter.cs" />
     <Compile Include="Converters\LogInConverter.cs" />
+    <Compile Include="Converters\StringConverter.cs" />
     <Compile Include="Converters\SumUserConverter.cs" />
     <Compile Include="Converters\ToFloatConverter.cs" />
     <Compile Include="Converters\ToIntConverter.cs" />
@@ -258,7 +259,6 @@
       <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BusinessLogicLayer\BonBLL.cs" />
-    <Compile Include="Models\BusinessLogicLayer\JoinedTablesBLL.cs" />
     <Compile Include="Models\BusinessLogicLayer\OferteBLL.cs" />
     <Compile Include="Models\BusinessLogicLayer\ProducatoriBLL.cs" />
     <Compile Include="Models\BusinessLogicLayer\ProduseBLL.cs" />
@@ -299,6 +299,21 @@
       <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetMaxTotalOnDay_Result.cs">
+      <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetProductsByCategory_Result.cs">
+      <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetProductsByCode_Result.cs">
+      <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetProductsByDataExpirare_Result.cs">
+      <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetProductsByName_Result.cs">
+      <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetProductsByNumeProducator_Result.cs">
       <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetSumOfUserOfMonth_Result.cs">
@@ -346,6 +361,7 @@
     <Compile Include="ViewModels\AddsVM.cs" />
     <Compile Include="ViewModels\AdministratorMainMenuVM.cs" />
     <Compile Include="ViewModels\AdministratorSearchesVM.cs" />
+    <Compile Include="ViewModels\CasierVM.cs" />
     <Compile Include="ViewModels\DeletesVM.cs" />
     <Compile Include="ViewModels\LogInVM.cs" />
     <Compile Include="ViewModels\ModifyVM.cs" />

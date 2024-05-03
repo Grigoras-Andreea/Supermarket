@@ -224,6 +224,21 @@
         <Function Name="GetMaxTotalOnDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Data" Type="date" Mode="In" />
         </Function>
+        <Function Name="GetProductsByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Category" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetProductsByCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cod" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetProductsByDataExpirare" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DataExpirare" Type="date" Mode="In" />
+        </Function>
+        <Function Name="GetProductsByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nume" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetProductsByNumeProducator" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NumeProducator" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetSumOfUserOfMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="An" Type="int" Mode="In" />
           <Parameter Name="Luna" Type="int" Mode="In" />
@@ -622,6 +637,21 @@
           <FunctionImport Name="UpdateOferte" />
           <FunctionImport Name="UpdateProduct" />
           <FunctionImport Name="UpdateStocuri" />
+          <FunctionImport Name="GetProductsByCategory" ReturnType="Collection(supermarketDBModel.GetProductsByCategory_Result)">
+            <Parameter Name="Category" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsByCode" ReturnType="Collection(supermarketDBModel.GetProductsByCode_Result)">
+            <Parameter Name="Cod" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsByDataExpirare" ReturnType="Collection(supermarketDBModel.GetProductsByDataExpirare_Result)">
+            <Parameter Name="DataExpirare" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsByName" ReturnType="Collection(supermarketDBModel.GetProductsByName_Result)">
+            <Parameter Name="Nume" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsByNumeProducator" ReturnType="Collection(supermarketDBModel.GetProductsByNumeProducator_Result)">
+            <Parameter Name="NumeProducator" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllProducatori_Result">
           <Property Type="Int32" Name="id_producator" Nullable="false" />
@@ -699,6 +729,36 @@
         <ComplexType Name="GetAllUsers_Result">
           <Property Type="Int32" Name="id_utilizator" Nullable="false" />
           <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByCategory_Result">
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="cod_bare" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="categorie" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="id_producator" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByCode_Result">
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="cod_bare" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="categorie" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="id_producator" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByDataExpirare_Result">
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="cod_bare" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="categorie" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="id_producator" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByName_Result">
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="cod_bare" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="categorie" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="id_producator" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByNumeProducator_Result">
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="cod_bare" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="categorie" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="id_producator" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -949,6 +1009,56 @@
           <FunctionImportMapping FunctionImportName="UpdateOferte" FunctionName="supermarketDBModel.Store.UpdateOferte" />
           <FunctionImportMapping FunctionImportName="UpdateProduct" FunctionName="supermarketDBModel.Store.UpdateProduct" />
           <FunctionImportMapping FunctionImportName="UpdateStocuri" FunctionName="supermarketDBModel.Store.UpdateStocuri" />
+          <FunctionImportMapping FunctionImportName="GetProductsByCategory" FunctionName="supermarketDBModel.Store.GetProductsByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetProductsByCategory_Result">
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="cod_bare" ColumnName="cod_bare" />
+                <ScalarProperty Name="categorie" ColumnName="categorie" />
+                <ScalarProperty Name="id_producator" ColumnName="id_producator" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByCode" FunctionName="supermarketDBModel.Store.GetProductsByCode">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetProductsByCode_Result">
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="cod_bare" ColumnName="cod_bare" />
+                <ScalarProperty Name="categorie" ColumnName="categorie" />
+                <ScalarProperty Name="id_producator" ColumnName="id_producator" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByDataExpirare" FunctionName="supermarketDBModel.Store.GetProductsByDataExpirare">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetProductsByDataExpirare_Result">
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="cod_bare" ColumnName="cod_bare" />
+                <ScalarProperty Name="categorie" ColumnName="categorie" />
+                <ScalarProperty Name="id_producator" ColumnName="id_producator" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByName" FunctionName="supermarketDBModel.Store.GetProductsByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetProductsByName_Result">
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="cod_bare" ColumnName="cod_bare" />
+                <ScalarProperty Name="categorie" ColumnName="categorie" />
+                <ScalarProperty Name="id_producator" ColumnName="id_producator" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByNumeProducator" FunctionName="supermarketDBModel.Store.GetProductsByNumeProducator">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetProductsByNumeProducator_Result">
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="cod_bare" ColumnName="cod_bare" />
+                <ScalarProperty Name="categorie" ColumnName="categorie" />
+                <ScalarProperty Name="id_producator" ColumnName="id_producator" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

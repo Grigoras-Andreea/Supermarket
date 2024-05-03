@@ -1,0 +1,24 @@
+﻿<Window x:Class="Supermarket.Views.Categories_Sum_Page"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Supermarket.ViewModels"
+        mc:Ignorable="d"
+        Title="Categories_Sum_Page" Height="400" Width="400">
+    <Window.DataContext>
+        <local:AdministratorSearchesVM/>
+    </Window.DataContext>
+    <Grid>
+        <DataGrid Name="ProducersGrid"
+    AutoGenerateColumns="False"
+    ScrollViewer.VerticalScrollBarVisibility="Visible"
+    ItemsSource="{Binding CategoriesSumList}"
+    >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Categorie" Binding="{Binding Item1, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Suma" Binding="{Binding Item2, Mode=OneWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

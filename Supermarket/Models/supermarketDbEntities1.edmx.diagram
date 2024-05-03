@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c8c9930951904517acb7bd607b7893ac" Name="Diagram1">
+        <EntityTypeShape EntityType="supermarketDBModel.Bonuri" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="supermarketDBModel.Oferte" Width="1.5" PointX="7.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="supermarketDBModel.Producatori" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="supermarketDBModel.Produs_Bon" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="supermarketDBModel.Produse" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="supermarketDBModel.Stocuri" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="supermarketDBModel.Utilizatori" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="supermarketDBModel.FK_Bonuri_Utilizatori" ManuallyRouted="false" />
+        <AssociationConnector Association="supermarketDBModel.FK_Produs_Bon_Bonuri" ManuallyRouted="false" />
+        <AssociationConnector Association="supermarketDBModel.FK_Oferte_Stocuri" ManuallyRouted="false" />
+        <AssociationConnector Association="supermarketDBModel.FK_Produse_Producatori" ManuallyRouted="false" />
+        <AssociationConnector Association="supermarketDBModel.FK_Produs_Bon_Produse" ManuallyRouted="false" />
+        <AssociationConnector Association="supermarketDBModel.FK_Stocuri_Produse" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

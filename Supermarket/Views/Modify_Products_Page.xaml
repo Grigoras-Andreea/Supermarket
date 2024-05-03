@@ -1,0 +1,120 @@
+﻿<Window x:Class="Supermarket.Views.Modify_Products_Page"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Supermarket.ViewModels"
+        xmlns:converter="clr-namespace:Supermarket.Converters"
+        mc:Ignorable="d"
+        Title="Modify_Products_Page" Height="450" Width="800">
+    <Window.DataContext>
+        <local:ModifyVM/>
+    </Window.DataContext>
+    <Grid>
+
+        <Grid.Resources>
+            <converter:ToStringConverter x:Key="toStringConverter"/>
+        </Grid.Resources>
+        <Label Content="Modify Product" HorizontalAlignment="Left" Margin="20,60,0,0"
+VerticalAlignment="Top" FontSize="30"
+FontFamily="Arial Black"/>
+
+        <Label Content="Products:"
+HorizontalAlignment="Left" Margin="17,129,0,0"
+VerticalAlignment="Top" FontSize="15"
+FontFamily="Arial"/>
+
+        <TextBox Name="id" HorizontalAlignment="Left"
+    Margin="20,337,0,0" TextWrapping="Wrap" 
+    VerticalAlignment="Top" Width="200" Height="30"
+    BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom"
+    Padding="0 0 0 1" />
+        <Label Content="ID" HorizontalAlignment="Left" Margin="20,313,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FF5B5858"/>
+
+        <TextBox Name="nume" HorizontalAlignment="Left"
+    Margin="270,187,0,0" TextWrapping="Wrap" 
+    VerticalAlignment="Top" Width="200" Height="30"
+    BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom"
+    Padding="0 0 0 1" />
+        <Label Content="Nume" HorizontalAlignment="Left" Margin="270,153,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FF5B5858"/>
+
+        <Button Content="Change" HorizontalAlignment="Left"
+Margin="270,270,0,0" VerticalAlignment="Top"
+Height="35" Width="200" Background="#FFD04EAF"
+FontFamily="Arial" Command="{Binding ModifyNumeProdusCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource toStringConverter}">
+                    <Binding ElementName="id" Path="Text"/>
+                    <Binding ElementName="nume" Path="Text"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" BorderBrush="Black" BorderThickness="1" CornerRadius="15">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="LightGray"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <TextBox Name="categorie" HorizontalAlignment="Left"
+    Margin="520,187,0,0" TextWrapping="Wrap" 
+    VerticalAlignment="Top" Width="200" Height="30"
+    BorderThickness="0,0,0,1" VerticalContentAlignment="Bottom"
+    Padding="0 0 0 1" />
+        <Label Content="Categorie" HorizontalAlignment="Left" Margin="520,153,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FF5B5858"/>
+
+        <Button Content="Change" HorizontalAlignment="Left"
+    Margin="520,270,0,0" VerticalAlignment="Top"
+    Height="35" Width="200" Background="#FFD04EAF"
+    FontFamily="Arial" Command="{Binding ModifyCategorieProdusCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource toStringConverter}">
+                    <Binding ElementName="id" Path="Text"/>
+                    <Binding ElementName="categorie" Path="Text"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" BorderBrush="Black" BorderThickness="1" CornerRadius="15">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="LightGray"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <DataGrid Name="ProducersGrid" Margin="20,153,580,150"
+    AutoGenerateColumns="False"
+    ScrollViewer.VerticalScrollBarVisibility="Visible"
+    ItemsSource="{Binding ProductsList}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Item1, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Item2, Mode=OneWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

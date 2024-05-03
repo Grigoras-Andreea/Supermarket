@@ -1,0 +1,123 @@
+﻿<Window x:Class="Supermarket.Views.Administrator_Add_Menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Supermarket.ViewModels"
+        mc:Ignorable="d"
+        Title="Administrator_Add_Menu" Height="500" Width="350">
+    <Window.DataContext>
+        <local:AdministratorMainMenuVM/>
+    </Window.DataContext>
+    <Grid>
+        <Label Content="Add Data" HorizontalAlignment="Center"
+           Margin="0,50,0,0" VerticalAlignment="Top"
+           FontSize="25" FontFamily="Arial Black"/>
+        <Button Content="Add Manufacturer" HorizontalAlignment="Center"
+            Margin="0,130,0,0" VerticalAlignment="Top"
+            Width="250" Height="50"
+            Command="{Binding AddManufacturerCommand}"
+            >
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border1" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border1" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Content="Add Products" HorizontalAlignment="Center"
+            Margin="0,190,0,0" VerticalAlignment="Top"
+            Width="250" Height="50" Background="White"
+            Command="{Binding AddProductCommand}"
+            >
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border2" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border2" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Content="Add Stocks" HorizontalAlignment="Center"
+            Margin="0,250,0,0" VerticalAlignment="Top"
+            Width="250" Height="50" Background="White"
+            Command="{Binding AddStocksCommand}"
+            >
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border3" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border3" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Content="Add Users" HorizontalAlignment="Center"
+            Margin="0,310,0,0" VerticalAlignment="Top"
+            Width="250" Height="50" Background="White"
+            Command="{Binding AddUsersCommand}"
+            >
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border4" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border4" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Content="Add Sales" HorizontalAlignment="Center"
+        Margin="0,370,0,0" VerticalAlignment="Top"
+        Width="250" Height="50" Background="White"
+        Command="{Binding AddSalesCommand}"
+        >
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border5" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"/>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border5" Property="Background" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+    </Grid>
+</Window>

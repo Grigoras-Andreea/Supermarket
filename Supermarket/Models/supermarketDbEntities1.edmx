@@ -1,0 +1,966 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="supermarketDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bonuri">
+          <Key>
+            <PropertyRef Name="id_bon" />
+          </Key>
+          <Property Name="id_bon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="data_eliberare" Type="date" Nullable="false" />
+          <Property Name="id_casier" Type="int" Nullable="false" />
+          <Property Name="total" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Oferte">
+          <Key>
+            <PropertyRef Name="id_oferta" />
+          </Key>
+          <Property Name="id_oferta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_stoc" Type="int" Nullable="false" />
+          <Property Name="motiv" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="procent_reducere" Type="int" Nullable="false" />
+          <Property Name="data_incepere" Type="date" Nullable="false" />
+          <Property Name="data_sfarsire" Type="date" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producatori">
+          <Key>
+            <PropertyRef Name="id_producator" />
+          </Key>
+          <Property Name="id_producator" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nume_producator" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="tara_origine" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Produs_Bon">
+          <Key>
+            <PropertyRef Name="id_produs" />
+            <PropertyRef Name="id_bon" />
+          </Key>
+          <Property Name="id_produs" Type="int" Nullable="false" />
+          <Property Name="id_bon" Type="int" Nullable="false" />
+          <Property Name="cantitate" Type="int" Nullable="false" />
+          <Property Name="total" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Produse">
+          <Key>
+            <PropertyRef Name="id_produs" />
+          </Key>
+          <Property Name="id_produs" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nume" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cod_bare" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="categorie" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_producator" Type="int" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stocuri">
+          <Key>
+            <PropertyRef Name="id_stoc" />
+          </Key>
+          <Property Name="id_stoc" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cantitate" Type="int" Nullable="false" />
+          <Property Name="unitate_masura" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="data_aprovizionare" Type="date" Nullable="false" />
+          <Property Name="data_expirare" Type="date" />
+          <Property Name="pret_achizitie" Type="float" Nullable="false" />
+          <Property Name="pret_vanzare" Type="float" Nullable="false" />
+          <Property Name="id_produs" Type="int" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Utilizatori">
+          <Key>
+            <PropertyRef Name="id_utilizator" />
+          </Key>
+          <Property Name="id_utilizator" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nume" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="parola" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="tip" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bonuri_Utilizatori">
+          <End Role="Utilizatori" Type="Self.Utilizatori" Multiplicity="1" />
+          <End Role="Bonuri" Type="Self.Bonuri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizatori">
+              <PropertyRef Name="id_utilizator" />
+            </Principal>
+            <Dependent Role="Bonuri">
+              <PropertyRef Name="id_casier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Oferte_Stocuri">
+          <End Role="Stocuri" Type="Self.Stocuri" Multiplicity="1" />
+          <End Role="Oferte" Type="Self.Oferte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stocuri">
+              <PropertyRef Name="id_stoc" />
+            </Principal>
+            <Dependent Role="Oferte">
+              <PropertyRef Name="id_stoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Produs_Bon_Bonuri">
+          <End Role="Bonuri" Type="Self.Bonuri" Multiplicity="1" />
+          <End Role="Produs_Bon" Type="Self.Produs_Bon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bonuri">
+              <PropertyRef Name="id_bon" />
+            </Principal>
+            <Dependent Role="Produs_Bon">
+              <PropertyRef Name="id_bon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Produs_Bon_Produse">
+          <End Role="Produse" Type="Self.Produse" Multiplicity="1" />
+          <End Role="Produs_Bon" Type="Self.Produs_Bon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produse">
+              <PropertyRef Name="id_produs" />
+            </Principal>
+            <Dependent Role="Produs_Bon">
+              <PropertyRef Name="id_produs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Produse_Producatori">
+          <End Role="Producatori" Type="Self.Producatori" Multiplicity="1" />
+          <End Role="Produse" Type="Self.Produse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producatori">
+              <PropertyRef Name="id_producator" />
+            </Principal>
+            <Dependent Role="Produse">
+              <PropertyRef Name="id_producator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stocuri_Produse">
+          <End Role="Produse" Type="Self.Produse" Multiplicity="1" />
+          <End Role="Stocuri" Type="Self.Stocuri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produse">
+              <PropertyRef Name="id_produs" />
+            </Principal>
+            <Dependent Role="Stocuri">
+              <PropertyRef Name="id_produs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddOferta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idStoc" Type="int" Mode="In" />
+          <Parameter Name="motiv" Type="varchar" Mode="In" />
+          <Parameter Name="reducere" Type="int" Mode="In" />
+          <Parameter Name="dataSfarsire" Type="date" Mode="In" />
+        </Function>
+        <Function Name="AddOferta2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idStoc" Type="int" Mode="In" />
+          <Parameter Name="motiv" Type="varchar" Mode="In" />
+          <Parameter Name="reducere" Type="int" Mode="In" />
+          <Parameter Name="dataSfarsire" Type="date" Mode="In" />
+        </Function>
+        <Function Name="AddProducator" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nume" Type="varchar" Mode="In" />
+          <Parameter Name="Tara" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="AddProdus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nume" Type="varchar" Mode="In" />
+          <Parameter Name="CodBare" Type="varchar" Mode="In" />
+          <Parameter Name="Categorie" Type="varchar" Mode="In" />
+          <Parameter Name="IDProducator" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddStoc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cantitate" Type="int" Mode="In" />
+          <Parameter Name="Unitate" Type="varchar" Mode="In" />
+          <Parameter Name="DataAprovizionare" Type="date" Mode="In" />
+          <Parameter Name="DataExpirare" Type="date" Mode="In" />
+          <Parameter Name="PretAchizitie" Type="float" Mode="In" />
+          <Parameter Name="IDProdus" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="Type" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteOferta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteOfertaAfterProdus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteOfertaAfterStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteStocks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteStocksAfterProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetAllOferte" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllOferte2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllOffersForSum" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllProducatori" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllProductCodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllProductsFromCompanySortedByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCompanie" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetAllProduse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllProduse2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllStocks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllStocks2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllStocksForSum" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllUsernames" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetExpirationDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetMaxTotalOnDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Data" Type="date" Mode="In" />
+        </Function>
+        <Function Name="GetSumOfUserOfMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="An" Type="int" Mode="In" />
+          <Parameter Name="Luna" Type="int" Mode="In" />
+          <Parameter Name="idUtilizator" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ModifyCantitateStoc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="cantitate" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ModifyCategorieProdus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="categorieNoua" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModifyMotivOferta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="motiv" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModifyNumeProducator" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="numeNou" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModifyNumeProdus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="numeNou" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModifyPretStoc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="pret" Type="float" Mode="In" />
+        </Function>
+        <Function Name="ModifyProcentOferta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="procent" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ModifyTaraProducator" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="taraNoua" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModifyUnitateStoc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="unitate" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spLogIn_Verification_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NumeUtilizator" Type="nvarchar" Mode="In" />
+          <Parameter Name="Parola" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SumPricesByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="supermarketDBModelStoreContainer">
+          <EntitySet Name="Bonuri" EntityType="Self.Bonuri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Oferte" EntityType="Self.Oferte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producatori" EntityType="Self.Producatori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produs_Bon" EntityType="Self.Produs_Bon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produse" EntityType="Self.Produse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stocuri" EntityType="Self.Stocuri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilizatori" EntityType="Self.Utilizatori" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bonuri_Utilizatori" Association="Self.FK_Bonuri_Utilizatori">
+            <End Role="Utilizatori" EntitySet="Utilizatori" />
+            <End Role="Bonuri" EntitySet="Bonuri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Oferte_Stocuri" Association="Self.FK_Oferte_Stocuri">
+            <End Role="Stocuri" EntitySet="Stocuri" />
+            <End Role="Oferte" EntitySet="Oferte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produs_Bon_Bonuri" Association="Self.FK_Produs_Bon_Bonuri">
+            <End Role="Bonuri" EntitySet="Bonuri" />
+            <End Role="Produs_Bon" EntitySet="Produs_Bon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produs_Bon_Produse" Association="Self.FK_Produs_Bon_Produse">
+            <End Role="Produse" EntitySet="Produse" />
+            <End Role="Produs_Bon" EntitySet="Produs_Bon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produse_Producatori" Association="Self.FK_Produse_Producatori">
+            <End Role="Producatori" EntitySet="Producatori" />
+            <End Role="Produse" EntitySet="Produse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stocuri_Produse" Association="Self.FK_Stocuri_Produse">
+            <End Role="Produse" EntitySet="Produse" />
+            <End Role="Stocuri" EntitySet="Stocuri" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="supermarketDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bonuri">
+          <Key>
+            <PropertyRef Name="id_bon" />
+          </Key>
+          <Property Name="id_bon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="data_eliberare" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_casier" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Utilizatori" Relationship="Self.FK_Bonuri_Utilizatori" FromRole="Bonuri" ToRole="Utilizatori" />
+          <NavigationProperty Name="Produs_Bon" Relationship="Self.FK_Produs_Bon_Bonuri" FromRole="Bonuri" ToRole="Produs_Bon" />
+        </EntityType>
+        <EntityType Name="Oferte">
+          <Key>
+            <PropertyRef Name="id_oferta" />
+          </Key>
+          <Property Name="id_oferta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_stoc" Type="Int32" Nullable="false" />
+          <Property Name="motiv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="procent_reducere" Type="Int32" Nullable="false" />
+          <Property Name="data_incepere" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="data_sfarsire" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Stocuri" Relationship="Self.FK_Oferte_Stocuri" FromRole="Oferte" ToRole="Stocuri" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Producatori">
+          <Key>
+            <PropertyRef Name="id_producator" />
+          </Key>
+          <Property Name="id_producator" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nume_producator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tara_origine" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Produse" Relationship="Self.FK_Produse_Producatori" FromRole="Producatori" ToRole="Produse" />
+        </EntityType>
+        <EntityType Name="Produs_Bon">
+          <Key>
+            <PropertyRef Name="id_produs" />
+            <PropertyRef Name="id_bon" />
+          </Key>
+          <Property Name="id_produs" Type="Int32" Nullable="false" />
+          <Property Name="id_bon" Type="Int32" Nullable="false" />
+          <Property Name="cantitate" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Bonuri" Relationship="Self.FK_Produs_Bon_Bonuri" FromRole="Produs_Bon" ToRole="Bonuri" />
+          <NavigationProperty Name="Produse" Relationship="Self.FK_Produs_Bon_Produse" FromRole="Produs_Bon" ToRole="Produse" />
+        </EntityType>
+        <EntityType Name="Produse">
+          <Key>
+            <PropertyRef Name="id_produs" />
+          </Key>
+          <Property Name="id_produs" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cod_bare" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="categorie" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_producator" Type="Int32" Nullable="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Producatori" Relationship="Self.FK_Produse_Producatori" FromRole="Produse" ToRole="Producatori" />
+          <NavigationProperty Name="Produs_Bon" Relationship="Self.FK_Produs_Bon_Produse" FromRole="Produse" ToRole="Produs_Bon" />
+          <NavigationProperty Name="Stocuri" Relationship="Self.FK_Stocuri_Produse" FromRole="Produse" ToRole="Stocuri" />
+        </EntityType>
+        <EntityType Name="Stocuri">
+          <Key>
+            <PropertyRef Name="id_stoc" />
+          </Key>
+          <Property Name="id_stoc" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cantitate" Type="Int32" Nullable="false" />
+          <Property Name="unitate_masura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="data_aprovizionare" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="data_expirare" Type="DateTime" Precision="0" />
+          <Property Name="pret_achizitie" Type="Double" Nullable="false" />
+          <Property Name="pret_vanzare" Type="Double" Nullable="false" />
+          <Property Name="id_produs" Type="Int32" Nullable="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Oferte" Relationship="Self.FK_Oferte_Stocuri" FromRole="Stocuri" ToRole="Oferte" />
+          <NavigationProperty Name="Produse" Relationship="Self.FK_Stocuri_Produse" FromRole="Stocuri" ToRole="Produse" />
+        </EntityType>
+        <EntityType Name="Utilizatori">
+          <Key>
+            <PropertyRef Name="id_utilizator" />
+          </Key>
+          <Property Name="id_utilizator" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="parola" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tip" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bonuri" Relationship="Self.FK_Bonuri_Utilizatori" FromRole="Utilizatori" ToRole="Bonuri" />
+        </EntityType>
+        <Association Name="FK_Bonuri_Utilizatori">
+          <End Role="Utilizatori" Type="Self.Utilizatori" Multiplicity="1" />
+          <End Role="Bonuri" Type="Self.Bonuri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizatori">
+              <PropertyRef Name="id_utilizator" />
+            </Principal>
+            <Dependent Role="Bonuri">
+              <PropertyRef Name="id_casier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Produs_Bon_Bonuri">
+          <End Role="Bonuri" Type="Self.Bonuri" Multiplicity="1" />
+          <End Role="Produs_Bon" Type="Self.Produs_Bon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bonuri">
+              <PropertyRef Name="id_bon" />
+            </Principal>
+            <Dependent Role="Produs_Bon">
+              <PropertyRef Name="id_bon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Oferte_Stocuri">
+          <End Role="Stocuri" Type="Self.Stocuri" Multiplicity="1" />
+          <End Role="Oferte" Type="Self.Oferte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stocuri">
+              <PropertyRef Name="id_stoc" />
+            </Principal>
+            <Dependent Role="Oferte">
+              <PropertyRef Name="id_stoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Produse_Producatori">
+          <End Role="Producatori" Type="Self.Producatori" Multiplicity="1" />
+          <End Role="Produse" Type="Self.Produse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producatori">
+              <PropertyRef Name="id_producator" />
+            </Principal>
+            <Dependent Role="Produse">
+              <PropertyRef Name="id_producator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Produs_Bon_Produse">
+          <End Role="Produse" Type="Self.Produse" Multiplicity="1" />
+          <End Role="Produs_Bon" Type="Self.Produs_Bon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produse">
+              <PropertyRef Name="id_produs" />
+            </Principal>
+            <Dependent Role="Produs_Bon">
+              <PropertyRef Name="id_produs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stocuri_Produse">
+          <End Role="Produse" Type="Self.Produse" Multiplicity="1" />
+          <End Role="Stocuri" Type="Self.Stocuri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produse">
+              <PropertyRef Name="id_produs" />
+            </Principal>
+            <Dependent Role="Stocuri">
+              <PropertyRef Name="id_produs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="supermarketDBEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bonuri" EntityType="Self.Bonuri" />
+          <EntitySet Name="Oferte" EntityType="Self.Oferte" />
+          <EntitySet Name="Producatori" EntityType="Self.Producatori" />
+          <EntitySet Name="Produs_Bon" EntityType="Self.Produs_Bon" />
+          <EntitySet Name="Produse" EntityType="Self.Produse" />
+          <EntitySet Name="Stocuri" EntityType="Self.Stocuri" />
+          <EntitySet Name="Utilizatori" EntityType="Self.Utilizatori" />
+          <AssociationSet Name="FK_Bonuri_Utilizatori" Association="Self.FK_Bonuri_Utilizatori">
+            <End Role="Utilizatori" EntitySet="Utilizatori" />
+            <End Role="Bonuri" EntitySet="Bonuri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produs_Bon_Bonuri" Association="Self.FK_Produs_Bon_Bonuri">
+            <End Role="Bonuri" EntitySet="Bonuri" />
+            <End Role="Produs_Bon" EntitySet="Produs_Bon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Oferte_Stocuri" Association="Self.FK_Oferte_Stocuri">
+            <End Role="Stocuri" EntitySet="Stocuri" />
+            <End Role="Oferte" EntitySet="Oferte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produse_Producatori" Association="Self.FK_Produse_Producatori">
+            <End Role="Producatori" EntitySet="Producatori" />
+            <End Role="Produse" EntitySet="Produse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produs_Bon_Produse" Association="Self.FK_Produs_Bon_Produse">
+            <End Role="Produse" EntitySet="Produse" />
+            <End Role="Produs_Bon" EntitySet="Produs_Bon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stocuri_Produse" Association="Self.FK_Stocuri_Produse">
+            <End Role="Produse" EntitySet="Produse" />
+            <End Role="Stocuri" EntitySet="Stocuri" />
+          </AssociationSet>
+          <FunctionImport Name="AddProducator">
+            <Parameter Name="Nume" Mode="In" Type="String" />
+            <Parameter Name="Tara" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddProdus">
+            <Parameter Name="Nume" Mode="In" Type="String" />
+            <Parameter Name="CodBare" Mode="In" Type="String" />
+            <Parameter Name="Categorie" Mode="In" Type="String" />
+            <Parameter Name="IDProducator" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddStoc">
+            <Parameter Name="Cantitate" Mode="In" Type="Int32" />
+            <Parameter Name="Unitate" Mode="In" Type="String" />
+            <Parameter Name="DataAprovizionare" Mode="In" Type="DateTime" />
+            <Parameter Name="DataExpirare" Mode="In" Type="DateTime" />
+            <Parameter Name="PretAchizitie" Mode="In" Type="Double" />
+            <Parameter Name="IDProdus" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllProducatori" ReturnType="Collection(supermarketDBModel.GetAllProducatori_Result)" />
+          <FunctionImport Name="GetAllProduse" ReturnType="Collection(supermarketDBModel.GetAllProduse_Result)" />
+          <FunctionImport Name="spLogIn_Verification_2" ReturnType="Collection(supermarketDBModel.spLogIn_Verification_2_Result)">
+            <Parameter Name="NumeUtilizator" Mode="In" Type="String" />
+            <Parameter Name="Parola" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddOferta">
+            <Parameter Name="idStoc" Mode="In" Type="Int32" />
+            <Parameter Name="motiv" Mode="In" Type="String" />
+            <Parameter Name="reducere" Mode="In" Type="Int32" />
+            <Parameter Name="dataSfarsire" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllStocks" ReturnType="Collection(supermarketDBModel.GetAllStocks_Result)" />
+          <FunctionImport Name="GetExpirationDate" ReturnType="Collection(DateTime)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddUser">
+            <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllProductCodes" ReturnType="Collection(String)" />
+          <FunctionImport Name="GetAllUsernames" ReturnType="Collection(String)" />
+          <FunctionImport Name="DeleteProducts">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteStocks">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteStocksAfterProducts">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllProduse2" ReturnType="Collection(supermarketDBModel.GetAllProduse2_Result)" />
+          <FunctionImport Name="AddOferta2">
+            <Parameter Name="idStoc" Mode="In" Type="Int32" />
+            <Parameter Name="motiv" Mode="In" Type="String" />
+            <Parameter Name="reducere" Mode="In" Type="Int32" />
+            <Parameter Name="dataSfarsire" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllOferte" ReturnType="Collection(supermarketDBModel.GetAllOferte_Result)" />
+          <FunctionImport Name="DeleteOferta">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteOfertaAfterProdus">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteOfertaAfterStock">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyNumeProducator">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="numeNou" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyTaraProducator">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="taraNoua" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllOferte2" ReturnType="Collection(supermarketDBModel.GetAllOferte2_Result)" />
+          <FunctionImport Name="ModifyCategorieProdus">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="categorieNoua" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyNumeProdus">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="numeNou" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllStocks2" ReturnType="Collection(supermarketDBModel.GetAllStocks2_Result)" />
+          <FunctionImport Name="ModifyCantitateStoc">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="cantitate" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyPretStoc">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="pret" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyUnitateStoc">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="unitate" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyMotivOferta">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="motiv" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyProcentOferta">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="procent" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllProductsFromCompanySortedByCategory" ReturnType="Collection(supermarketDBModel.GetAllProductsFromCompanySortedByCategory_Result)">
+          <Parameter Name="idCompanie" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetMaxTotalOnDay" ReturnType="Collection(supermarketDBModel.GetMaxTotalOnDay_Result)">
+          <Parameter Name="Data" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetSumOfUserOfMonth" ReturnType="Collection(supermarketDBModel.GetSumOfUserOfMonth_Result)">
+            <Parameter Name="An" Mode="In" Type="Int32" />
+            <Parameter Name="Luna" Mode="In" Type="Int32" />
+            <Parameter Name="idUtilizator" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SumPricesByCategory" ReturnType="Collection(supermarketDBModel.SumPricesByCategory_Result)" />
+          <FunctionImport Name="GetAllOffersForSum" ReturnType="Collection(supermarketDBModel.GetAllOffersForSum_Result)" />
+          <FunctionImport Name="GetAllStocksForSum" ReturnType="Collection(supermarketDBModel.GetAllStocksForSum_Result)" />
+          <FunctionImport Name="GetAllUsers" ReturnType="Collection(supermarketDBModel.GetAllUsers_Result)" />
+        </EntityContainer>
+        <ComplexType Name="GetAllProducatori_Result">
+          <Property Type="Int32" Name="id_producator" Nullable="false" />
+          <Property Type="String" Name="nume_producator" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetAllProduse_Result">
+          <Property Type="Int32" Name="id_produs" Nullable="false" />
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="spLogIn_Verification_2_Result">
+          <Property Type="Int32" Name="id_utilizator" Nullable="false" />
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="parola" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="tip" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetAllStocks_Result">
+          <Property Type="Int32" Name="id_stoc" Nullable="false" />
+          <Property Type="Int32" Name="cantitate" Nullable="false" />
+          <Property Type="DateTime" Name="data_expirare" Nullable="true" />
+          <Property Type="Int32" Name="id_produs" Nullable="false" />
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetAllProduse2_Result">
+          <Property Type="Int32" Name="id_produs" Nullable="false" />
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetAllOferte_Result">
+          <Property Type="String" Name="motiv" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="procent_reducere" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllOferte2_Result">
+          <Property Type="Int32" Name="id_oferta" Nullable="false" />
+          <Property Type="String" Name="motiv" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="procent_reducere" Nullable="false" />
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetAllStocks2_Result">
+          <Property Type="Int32" Name="id_stoc" Nullable="false" />
+          <Property Type="String" Name="unitate_masura" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="cantitate" Nullable="false" />
+          <Property Type="Double" Name="pret_achizitie" Nullable="false" />
+          <Property Type="Double" Name="pret_vanzare" Nullable="false" />
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetAllProductsFromCompanySortedByCategory_Result">
+          <Property Type="String" Name="categorie" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetMaxTotalOnDay_Result">
+          <Property Type="Int32" Name="id_bon" Nullable="false" />
+          <Property Type="DateTime" Name="data_eliberare" Nullable="false" />
+          <Property Type="Int32" Name="id_casier" Nullable="false" />
+          <Property Type="Double" Name="total" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetSumOfUserOfMonth_Result">
+          <Property Type="Int32" Name="Ziua" Nullable="true" />
+          <Property Type="Double" Name="Suma" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SumPricesByCategory_Result">
+          <Property Type="String" Name="categorie" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="suma_preturilor" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllOffersForSum_Result">
+          <Property Type="Int32" Name="id_stoc" Nullable="false" />
+          <Property Type="String" Name="motiv" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="procent_reducere" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllStocksForSum_Result">
+          <Property Type="Int32" Name="id_stoc" Nullable="false" />
+          <Property Type="Int32" Name="cantitate" Nullable="false" />
+          <Property Type="DateTime" Name="data_expirare" Nullable="true" />
+          <Property Type="Double" Name="pret_vanzare" Nullable="false" />
+          <Property Type="String" Name="categorie" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetAllUsers_Result">
+          <Property Type="Int32" Name="id_utilizator" Nullable="false" />
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="supermarketDBModelStoreContainer" CdmEntityContainer="supermarketDBEntities2">
+          <EntitySetMapping Name="Bonuri">
+            <EntityTypeMapping TypeName="supermarketDBModel.Bonuri">
+              <MappingFragment StoreEntitySet="Bonuri">
+                <ScalarProperty Name="id_bon" ColumnName="id_bon" />
+                <ScalarProperty Name="data_eliberare" ColumnName="data_eliberare" />
+                <ScalarProperty Name="id_casier" ColumnName="id_casier" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Oferte">
+            <EntityTypeMapping TypeName="supermarketDBModel.Oferte">
+              <MappingFragment StoreEntitySet="Oferte">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="id_oferta" ColumnName="id_oferta" />
+                <ScalarProperty Name="id_stoc" ColumnName="id_stoc" />
+                <ScalarProperty Name="motiv" ColumnName="motiv" />
+                <ScalarProperty Name="procent_reducere" ColumnName="procent_reducere" />
+                <ScalarProperty Name="data_incepere" ColumnName="data_incepere" />
+                <ScalarProperty Name="data_sfarsire" ColumnName="data_sfarsire" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producatori">
+            <EntityTypeMapping TypeName="supermarketDBModel.Producatori">
+              <MappingFragment StoreEntitySet="Producatori">
+                <ScalarProperty Name="id_producator" ColumnName="id_producator" />
+                <ScalarProperty Name="nume_producator" ColumnName="nume_producator" />
+                <ScalarProperty Name="tara_origine" ColumnName="tara_origine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produs_Bon">
+            <EntityTypeMapping TypeName="supermarketDBModel.Produs_Bon">
+              <MappingFragment StoreEntitySet="Produs_Bon">
+                <ScalarProperty Name="id_produs" ColumnName="id_produs" />
+                <ScalarProperty Name="id_bon" ColumnName="id_bon" />
+                <ScalarProperty Name="cantitate" ColumnName="cantitate" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produse">
+            <EntityTypeMapping TypeName="supermarketDBModel.Produse">
+              <MappingFragment StoreEntitySet="Produse">
+                <ScalarProperty Name="id_produs" ColumnName="id_produs" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="cod_bare" ColumnName="cod_bare" />
+                <ScalarProperty Name="categorie" ColumnName="categorie" />
+                <ScalarProperty Name="id_producator" ColumnName="id_producator" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stocuri">
+            <EntityTypeMapping TypeName="supermarketDBModel.Stocuri">
+              <MappingFragment StoreEntitySet="Stocuri">
+                <ScalarProperty Name="id_stoc" ColumnName="id_stoc" />
+                <ScalarProperty Name="cantitate" ColumnName="cantitate" />
+                <ScalarProperty Name="unitate_masura" ColumnName="unitate_masura" />
+                <ScalarProperty Name="data_aprovizionare" ColumnName="data_aprovizionare" />
+                <ScalarProperty Name="data_expirare" ColumnName="data_expirare" />
+                <ScalarProperty Name="pret_achizitie" ColumnName="pret_achizitie" />
+                <ScalarProperty Name="pret_vanzare" ColumnName="pret_vanzare" />
+                <ScalarProperty Name="id_produs" ColumnName="id_produs" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilizatori">
+            <EntityTypeMapping TypeName="supermarketDBModel.Utilizatori">
+              <MappingFragment StoreEntitySet="Utilizatori">
+                <ScalarProperty Name="id_utilizator" ColumnName="id_utilizator" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="parola" ColumnName="parola" />
+                <ScalarProperty Name="tip" ColumnName="tip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddProducator" FunctionName="supermarketDBModel.Store.AddProducator" />
+          <FunctionImportMapping FunctionImportName="AddProdus" FunctionName="supermarketDBModel.Store.AddProdus" />
+          <FunctionImportMapping FunctionImportName="AddStoc" FunctionName="supermarketDBModel.Store.AddStoc" />
+          <FunctionImportMapping FunctionImportName="GetAllProducatori" FunctionName="supermarketDBModel.Store.GetAllProducatori">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllProducatori_Result">
+                <ScalarProperty Name="id_producator" ColumnName="id_producator" />
+                <ScalarProperty Name="nume_producator" ColumnName="nume_producator" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllProduse" FunctionName="supermarketDBModel.Store.GetAllProduse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllProduse_Result">
+                <ScalarProperty Name="id_produs" ColumnName="id_produs" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spLogIn_Verification_2" FunctionName="supermarketDBModel.Store.spLogIn_Verification_2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.spLogIn_Verification_2_Result">
+                <ScalarProperty Name="id_utilizator" ColumnName="id_utilizator" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="parola" ColumnName="parola" />
+                <ScalarProperty Name="tip" ColumnName="tip" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddOferta" FunctionName="supermarketDBModel.Store.AddOferta" />
+          <FunctionImportMapping FunctionImportName="GetAllStocks" FunctionName="supermarketDBModel.Store.GetAllStocks">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllStocks_Result">
+                <ScalarProperty Name="id_stoc" ColumnName="id_stoc" />
+                <ScalarProperty Name="cantitate" ColumnName="cantitate" />
+                <ScalarProperty Name="data_expirare" ColumnName="data_expirare" />
+                <ScalarProperty Name="id_produs" ColumnName="id_produs" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetExpirationDate" FunctionName="supermarketDBModel.Store.GetExpirationDate" />
+          <FunctionImportMapping FunctionImportName="AddUser" FunctionName="supermarketDBModel.Store.AddUser" />
+          <FunctionImportMapping FunctionImportName="GetAllProductCodes" FunctionName="supermarketDBModel.Store.GetAllProductCodes" />
+          <FunctionImportMapping FunctionImportName="GetAllUsernames" FunctionName="supermarketDBModel.Store.GetAllUsernames" />
+          <FunctionImportMapping FunctionImportName="DeleteProducts" FunctionName="supermarketDBModel.Store.DeleteProducts" />
+          <FunctionImportMapping FunctionImportName="DeleteStocks" FunctionName="supermarketDBModel.Store.DeleteStocks" />
+          <FunctionImportMapping FunctionImportName="DeleteStocksAfterProducts" FunctionName="supermarketDBModel.Store.DeleteStocksAfterProducts" />
+          <FunctionImportMapping FunctionImportName="GetAllProduse2" FunctionName="supermarketDBModel.Store.GetAllProduse2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllProduse2_Result">
+                <ScalarProperty Name="id_produs" ColumnName="id_produs" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddOferta2" FunctionName="supermarketDBModel.Store.AddOferta2" />
+          <FunctionImportMapping FunctionImportName="GetAllOferte" FunctionName="supermarketDBModel.Store.GetAllOferte">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllOferte_Result">
+                <ScalarProperty Name="motiv" ColumnName="motiv" />
+                <ScalarProperty Name="procent_reducere" ColumnName="procent_reducere" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeleteOferta" FunctionName="supermarketDBModel.Store.DeleteOferta" />
+          <FunctionImportMapping FunctionImportName="DeleteOfertaAfterProdus" FunctionName="supermarketDBModel.Store.DeleteOfertaAfterProdus" />
+          <FunctionImportMapping FunctionImportName="DeleteOfertaAfterStock" FunctionName="supermarketDBModel.Store.DeleteOfertaAfterStock" />
+          <FunctionImportMapping FunctionImportName="ModifyNumeProducator" FunctionName="supermarketDBModel.Store.ModifyNumeProducator" />
+          <FunctionImportMapping FunctionImportName="ModifyTaraProducator" FunctionName="supermarketDBModel.Store.ModifyTaraProducator" />
+          <FunctionImportMapping FunctionImportName="GetAllOferte2" FunctionName="supermarketDBModel.Store.GetAllOferte2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllOferte2_Result">
+                <ScalarProperty Name="id_oferta" ColumnName="id_oferta" />
+                <ScalarProperty Name="motiv" ColumnName="motiv" />
+                <ScalarProperty Name="procent_reducere" ColumnName="procent_reducere" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ModifyCategorieProdus" FunctionName="supermarketDBModel.Store.ModifyCategorieProdus" />
+          <FunctionImportMapping FunctionImportName="ModifyNumeProdus" FunctionName="supermarketDBModel.Store.ModifyNumeProdus" />
+          <FunctionImportMapping FunctionImportName="GetAllStocks2" FunctionName="supermarketDBModel.Store.GetAllStocks2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllStocks2_Result">
+                <ScalarProperty Name="id_stoc" ColumnName="id_stoc" />
+                <ScalarProperty Name="unitate_masura" ColumnName="unitate_masura" />
+                <ScalarProperty Name="cantitate" ColumnName="cantitate" />
+                <ScalarProperty Name="pret_achizitie" ColumnName="pret_achizitie" />
+                <ScalarProperty Name="pret_vanzare" ColumnName="pret_vanzare" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ModifyCantitateStoc" FunctionName="supermarketDBModel.Store.ModifyCantitateStoc" />
+          <FunctionImportMapping FunctionImportName="ModifyPretStoc" FunctionName="supermarketDBModel.Store.ModifyPretStoc" />
+          <FunctionImportMapping FunctionImportName="ModifyUnitateStoc" FunctionName="supermarketDBModel.Store.ModifyUnitateStoc" />
+          <FunctionImportMapping FunctionImportName="ModifyMotivOferta" FunctionName="supermarketDBModel.Store.ModifyMotivOferta" />
+          <FunctionImportMapping FunctionImportName="ModifyProcentOferta" FunctionName="supermarketDBModel.Store.ModifyProcentOferta" />
+          <FunctionImportMapping FunctionImportName="GetAllProductsFromCompanySortedByCategory" FunctionName="supermarketDBModel.Store.GetAllProductsFromCompanySortedByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllProductsFromCompanySortedByCategory_Result">
+                <ScalarProperty Name="categorie" ColumnName="categorie" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMaxTotalOnDay" FunctionName="supermarketDBModel.Store.GetMaxTotalOnDay">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetMaxTotalOnDay_Result">
+                <ScalarProperty Name="id_bon" ColumnName="id_bon" />
+                <ScalarProperty Name="data_eliberare" ColumnName="data_eliberare" />
+                <ScalarProperty Name="id_casier" ColumnName="id_casier" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSumOfUserOfMonth" FunctionName="supermarketDBModel.Store.GetSumOfUserOfMonth">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetSumOfUserOfMonth_Result">
+                <ScalarProperty Name="Ziua" ColumnName="Ziua" />
+                <ScalarProperty Name="Suma" ColumnName="Suma" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SumPricesByCategory" FunctionName="supermarketDBModel.Store.SumPricesByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.SumPricesByCategory_Result">
+                <ScalarProperty Name="categorie" ColumnName="categorie" />
+                <ScalarProperty Name="suma_preturilor" ColumnName="suma_preturilor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllOffersForSum" FunctionName="supermarketDBModel.Store.GetAllOffersForSum">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllOffersForSum_Result">
+                <ScalarProperty Name="id_stoc" ColumnName="id_stoc" />
+                <ScalarProperty Name="motiv" ColumnName="motiv" />
+                <ScalarProperty Name="procent_reducere" ColumnName="procent_reducere" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllStocksForSum" FunctionName="supermarketDBModel.Store.GetAllStocksForSum">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllStocksForSum_Result">
+                <ScalarProperty Name="id_stoc" ColumnName="id_stoc" />
+                <ScalarProperty Name="cantitate" ColumnName="cantitate" />
+                <ScalarProperty Name="data_expirare" ColumnName="data_expirare" />
+                <ScalarProperty Name="pret_vanzare" ColumnName="pret_vanzare" />
+                <ScalarProperty Name="categorie" ColumnName="categorie" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllUsers" FunctionName="supermarketDBModel.Store.GetAllUsers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetAllUsers_Result">
+                <ScalarProperty Name="id_utilizator" ColumnName="id_utilizator" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

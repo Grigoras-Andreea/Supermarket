@@ -16,6 +16,8 @@ namespace Supermarket.ViewModels
     {
         private ProduseBLL produseBLL;
 
+        private ShoppingListBLL shoppingListBLL;
+
         public ICommand GetProductsByNameCommand { get; set; }
         public ICommand GetProductsByCodeCommand { get; set; }
         public ICommand GetProductsByExpiringDateCommand { get; set; }
@@ -23,15 +25,25 @@ namespace Supermarket.ViewModels
         public ICommand GetProductsByCategoryCommand { get; set; }
 
 
+
+
+        public ICommand AddProductToShoppingListCommand { get; set; }
+        public ICommand FinishShoppingListCommand { get; set; }
+
+
         public CasierVM()
         {
             produseBLL = new ProduseBLL();
+            shoppingListBLL = new ShoppingListBLL();
 
             GetProductsByNameCommand = new RelayCommand(GetProductsByName);
             GetProductsByCodeCommand = new RelayCommand(GetProductsByCode);
             GetProductsByExpiringDateCommand = new RelayCommand(GetProductsByExpiringDate);
             GetProductsByProducerCommand = new RelayCommand(GetProductsByProducer);
             GetProductsByCategoryCommand = new RelayCommand(GetProductsByCategory);
+
+            AddProductToShoppingListCommand = new RelayCommand(AddProduct);
+            FinishShoppingListCommand = new RelayCommand(FinishShoppingList);
 
         }
 
@@ -46,6 +58,48 @@ namespace Supermarket.ViewModels
             {
                 productsList = value;
                 NotifyPropertyChanged("ProductsList");
+            }
+        }
+
+        private ObservableCollection<Tuple<int, string, double>> shoppingList;
+        public ObservableCollection<Tuple<int, string, double>> ShoppingList
+        {
+            get
+            {
+                return shoppingList;
+            }
+            set
+            {
+                shoppingList = value;
+                NotifyPropertyChanged("ShoppingList");
+            }
+        }
+
+        private ObservableCollection<Tuple<string, int, double, int>> finalShoppinList;
+        public ObservableCollection<Tuple<string, int, double, int>> FinalShoppingList
+        {
+            get
+            {
+                return finalShoppinList;
+            }
+            set
+            {
+                finalShoppinList = value;
+                NotifyPropertyChanged("FinalShoppingList");
+            }
+        }
+
+        private double totalPrice;
+        public double TotalPrice
+        {
+            get
+            {
+                return totalPrice;
+            }
+            set
+            {
+                totalPrice = value;
+                NotifyPropertyChanged("TotalPrice");
             }
         }
 
@@ -107,6 +161,44 @@ namespace Supermarket.ViewModels
             {
                 ProductsList = produseBLL.GetAllProductsByCategory(obj.ToString());
             }
+        }
+
+        //--------------------------------------------
+
+        private void AddProduct(object obj)
+        {
+            var code = obj?.ToString(); // Null check for input code
+            if (string.IsNullOrEmpty(code))
+            {
+                MessageBox.Show("Invalid input.");
+                return;
+            }
+
+            var product = shoppingListBLL.GetShoppingListElement(code);
+            if (product != null)
+            {
+                if (ShoppingList == null)
+                {
+                    ShoppingList = new ObservableCollection<Tuple<int, string, double>>();
+                }
+                ShoppingList.Add(product);
+            }
+        }
+
+        private void FinishShoppingList(object obj)
+        {
+            if (ShoppingList == null || ShoppingList.Count == 0)
+            {
+                MessageBox.Show("The shopping list is empty.");
+                return;
+            }
+
+            Tuple<ObservableCollection<Tuple<string, int, double, int>>, double> result = shoppingListBLL.FinishShoppingList(ShoppingList, 2);
+
+            FinalShoppingList = result.Item1;
+            TotalPrice = result.Item2;
+
+            ShoppingList.Clear();
         }
     }
 }

@@ -509,5 +509,71 @@ namespace Supermarket.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByNumeProducator_Result>("GetProductsByNumeProducator", numeProducatorParameter);
         }
+    
+        public virtual ObjectResult<GetOfertaForStock_Result> GetOfertaForStock(Nullable<int> iDStoc)
+        {
+            var iDStocParameter = iDStoc.HasValue ?
+                new ObjectParameter("IDStoc", iDStoc) :
+                new ObjectParameter("IDStoc", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOfertaForStock_Result>("GetOfertaForStock", iDStocParameter);
+        }
+    
+        public virtual ObjectResult<GetStockFromCode_Result> GetStockFromCode(string cod)
+        {
+            var codParameter = cod != null ?
+                new ObjectParameter("Cod", cod) :
+                new ObjectParameter("Cod", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStockFromCode_Result>("GetStockFromCode", codParameter);
+        }
+    
+        public virtual int SubstractQuantityFromStock(Nullable<int> iDStoc)
+        {
+            var iDStocParameter = iDStoc.HasValue ?
+                new ObjectParameter("IDStoc", iDStoc) :
+                new ObjectParameter("IDStoc", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SubstractQuantityFromStock", iDStocParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetBonLastID()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetBonLastID");
+        }
+    
+        public virtual int InsertBon(Nullable<int> iDCasier, Nullable<double> total)
+        {
+            var iDCasierParameter = iDCasier.HasValue ?
+                new ObjectParameter("IDCasier", iDCasier) :
+                new ObjectParameter("IDCasier", typeof(int));
+    
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("Total", total) :
+                new ObjectParameter("Total", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertBon", iDCasierParameter, totalParameter);
+        }
+    
+        public virtual int InsertIntoProdusBon(Nullable<int> idProdus, Nullable<int> idBon, Nullable<int> cantitate, Nullable<double> total)
+        {
+            var idProdusParameter = idProdus.HasValue ?
+                new ObjectParameter("IdProdus", idProdus) :
+                new ObjectParameter("IdProdus", typeof(int));
+    
+            var idBonParameter = idBon.HasValue ?
+                new ObjectParameter("IdBon", idBon) :
+                new ObjectParameter("IdBon", typeof(int));
+    
+            var cantitateParameter = cantitate.HasValue ?
+                new ObjectParameter("Cantitate", cantitate) :
+                new ObjectParameter("Cantitate", typeof(int));
+    
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("Total", total) :
+                new ObjectParameter("Total", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertIntoProdusBon", idProdusParameter, idBonParameter, cantitateParameter, totalParameter);
+        }
     }
 }

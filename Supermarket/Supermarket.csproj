@@ -252,6 +252,7 @@
     <Compile Include="Converters\SumUserConverter.cs" />
     <Compile Include="Converters\ToFloatConverter.cs" />
     <Compile Include="Converters\ToIntConverter.cs" />
+    <Compile Include="Converters\ToOneStringConverter.cs" />
     <Compile Include="Converters\ToStringConverter.cs" />
     <Compile Include="Helpers\BaseVM.cs" />
     <Compile Include="Helpers\RelayCommands.cs" />
@@ -263,6 +264,7 @@
     <Compile Include="Models\BusinessLogicLayer\ProducatoriBLL.cs" />
     <Compile Include="Models\BusinessLogicLayer\ProduseBLL.cs" />
     <Compile Include="Models\BusinessLogicLayer\Produs_BonBLL.cs" />
+    <Compile Include="Models\BusinessLogicLayer\ShoppingListBLL.cs" />
     <Compile Include="Models\BusinessLogicLayer\StocuriBLL.cs" />
     <Compile Include="Models\BusinessLogicLayer\UtilizatoriBLL.cs" />
     <Compile Include="Models\GetAllOferte2_Result.cs">
@@ -301,6 +303,9 @@
     <Compile Include="Models\GetMaxTotalOnDay_Result.cs">
       <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetOfertaForStock_Result.cs">
+      <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetProductsByCategory_Result.cs">
       <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
     </Compile>
@@ -314,6 +319,9 @@
       <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetProductsByNumeProducator_Result.cs">
+      <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetStockFromCode_Result.cs">
       <DependentUpon>supermarketDbEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetSumOfUserOfMonth_Result.cs">

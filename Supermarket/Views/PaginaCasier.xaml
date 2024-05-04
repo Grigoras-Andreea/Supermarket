@@ -212,10 +212,10 @@
         <Button Content="ADD" HorizontalAlignment="Left"
         Margin="49,90,0,0" VerticalAlignment="Top"
         Width="150" Height="30"
-        Command="{Binding GetProductsByCodeCommand}"
+        Command="{Binding AddProductToShoppingListCommand}"
         >
             <Button.CommandParameter>
-                <Binding ElementName="codBare" Path="Text" Converter="{StaticResource stringConverter}" />
+                <Binding ElementName="codBare2" Path="Text" Converter="{StaticResource stringConverter}" />
             </Button.CommandParameter>
             <Button.Template>
                 <ControlTemplate TargetType="Button">
@@ -237,7 +237,7 @@
         <DataGrid Name="ShoppingListGrid" Margin="49,145,675,399"
         AutoGenerateColumns="False"
         ScrollViewer.VerticalScrollBarVisibility="Visible"
-        ItemsSource="{Binding ProductsList, UpdateSourceTrigger=PropertyChanged}"
+        ItemsSource="{Binding ShoppingList, UpdateSourceTrigger=PropertyChanged}"
         >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID Produs" Binding="{Binding Item1, Mode=OneWay}"/>
@@ -249,11 +249,8 @@
         <Button Content="Finish" HorizontalAlignment="Left"
         Margin="375,408,0,0" VerticalAlignment="Top"
         Width="150" Height="30"
-        Command="{Binding GetProductsByCodeCommand}"
+        Command="{Binding FinishShoppingListCommand}"
         >
-            <Button.CommandParameter>
-                <Binding ElementName="codBare" Path="Text" Converter="{StaticResource stringConverter}" />
-            </Button.CommandParameter>
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border1" BorderBrush="Gray" BorderThickness="2" CornerRadius="20">
@@ -274,7 +271,7 @@
         <DataGrid Name="FinishedShoppingListGrid" Margin="49,455,675,90"
         AutoGenerateColumns="False"
         ScrollViewer.VerticalScrollBarVisibility="Visible"
-        ItemsSource="{Binding ProductsList, UpdateSourceTrigger=PropertyChanged}"
+        ItemsSource="{Binding FinalShoppingList, UpdateSourceTrigger=PropertyChanged}"
         >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Produs" Binding="{Binding Item1, Mode=OneWay}"/>
@@ -290,7 +287,7 @@
                    FontSize="25"
                    />
         <TextBlock HorizontalAlignment="Left" Margin="424,699,0,0"
-                   TextWrapping="Wrap" Text="100,45"
+                   TextWrapping="Wrap" Text="{Binding TotalPrice}"
                    VerticalAlignment="Top"
                    Height="37" Width="101"
                    FontSize="25"

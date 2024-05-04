@@ -218,11 +218,15 @@
         <Function Name="GetAllStocksForSum" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllUsernames" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetBonLastID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetExpirationDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="GetMaxTotalOnDay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Data" Type="date" Mode="In" />
+        </Function>
+        <Function Name="GetOfertaForStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDStoc" Type="int" Mode="In" />
         </Function>
         <Function Name="GetProductsByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Category" Type="varchar" Mode="In" />
@@ -239,10 +243,23 @@
         <Function Name="GetProductsByNumeProducator" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NumeProducator" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetStockFromCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Cod" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetSumOfUserOfMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="An" Type="int" Mode="In" />
           <Parameter Name="Luna" Type="int" Mode="In" />
           <Parameter Name="idUtilizator" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertBon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDCasier" Type="int" Mode="In" />
+          <Parameter Name="Total" Type="float" Mode="In" />
+        </Function>
+        <Function Name="InsertIntoProdusBon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdProdus" Type="int" Mode="In" />
+          <Parameter Name="IdBon" Type="int" Mode="In" />
+          <Parameter Name="Cantitate" Type="int" Mode="In" />
+          <Parameter Name="Total" Type="float" Mode="In" />
         </Function>
         <Function Name="ModifyCantitateStoc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -283,6 +300,9 @@
         <Function Name="spLogIn_Verification_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NumeUtilizator" Type="nvarchar" Mode="In" />
           <Parameter Name="Parola" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SubstractQuantityFromStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDStoc" Type="int" Mode="In" />
         </Function>
         <Function Name="SumPricesByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="UpdateOferte" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -638,19 +658,39 @@
           <FunctionImport Name="UpdateProduct" />
           <FunctionImport Name="UpdateStocuri" />
           <FunctionImport Name="GetProductsByCategory" ReturnType="Collection(supermarketDBModel.GetProductsByCategory_Result)">
-            <Parameter Name="Category" Mode="In" Type="String" />
+          <Parameter Name="Category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetProductsByCode" ReturnType="Collection(supermarketDBModel.GetProductsByCode_Result)">
-            <Parameter Name="Cod" Mode="In" Type="String" />
+          <Parameter Name="Cod" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetProductsByDataExpirare" ReturnType="Collection(supermarketDBModel.GetProductsByDataExpirare_Result)">
-            <Parameter Name="DataExpirare" Mode="In" Type="DateTime" />
+          <Parameter Name="DataExpirare" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="GetProductsByName" ReturnType="Collection(supermarketDBModel.GetProductsByName_Result)">
-            <Parameter Name="Nume" Mode="In" Type="String" />
+          <Parameter Name="Nume" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetProductsByNumeProducator" ReturnType="Collection(supermarketDBModel.GetProductsByNumeProducator_Result)">
-            <Parameter Name="NumeProducator" Mode="In" Type="String" />
+          <Parameter Name="NumeProducator" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOfertaForStock" ReturnType="Collection(supermarketDBModel.GetOfertaForStock_Result)">
+          <Parameter Name="IDStoc" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetStockFromCode" ReturnType="Collection(supermarketDBModel.GetStockFromCode_Result)">
+          <Parameter Name="Cod" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SubstractQuantityFromStock">
+          <Parameter Name="IDStoc" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBonLastID" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="InsertBon">
+            <Parameter Name="IDCasier" Mode="In" Type="Int32" />
+            <Parameter Name="Total" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="InsertIntoProdusBon">
+            <Parameter Name="IdProdus" Mode="In" Type="Int32" />
+            <Parameter Name="IdBon" Mode="In" Type="Int32" />
+            <Parameter Name="Cantitate" Mode="In" Type="Int32" />
+            <Parameter Name="Total" Mode="In" Type="Double" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetAllProducatori_Result">
@@ -759,6 +799,18 @@
           <Property Type="String" Name="cod_bare" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="categorie" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="id_producator" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetOfertaForStock_Result">
+          <Property Type="String" Name="motiv" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="procent_reducere" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetStockFromCode_Result">
+          <Property Type="Int32" Name="id_produs" Nullable="false" />
+          <Property Type="String" Name="nume" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="id_stoc" Nullable="false" />
+          <Property Type="Int32" Name="cantitate" Nullable="false" />
+          <Property Type="DateTime" Name="data_expirare" Nullable="true" />
+          <Property Type="Double" Name="pret_vanzare" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1059,6 +1111,30 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOfertaForStock" FunctionName="supermarketDBModel.Store.GetOfertaForStock">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetOfertaForStock_Result">
+                <ScalarProperty Name="motiv" ColumnName="motiv" />
+                <ScalarProperty Name="procent_reducere" ColumnName="procent_reducere" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStockFromCode" FunctionName="supermarketDBModel.Store.GetStockFromCode">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="supermarketDBModel.GetStockFromCode_Result">
+                <ScalarProperty Name="id_produs" ColumnName="id_produs" />
+                <ScalarProperty Name="nume" ColumnName="nume" />
+                <ScalarProperty Name="id_stoc" ColumnName="id_stoc" />
+                <ScalarProperty Name="cantitate" ColumnName="cantitate" />
+                <ScalarProperty Name="data_expirare" ColumnName="data_expirare" />
+                <ScalarProperty Name="pret_vanzare" ColumnName="pret_vanzare" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SubstractQuantityFromStock" FunctionName="supermarketDBModel.Store.SubstractQuantityFromStock" />
+          <FunctionImportMapping FunctionImportName="GetBonLastID" FunctionName="supermarketDBModel.Store.GetBonLastID" />
+          <FunctionImportMapping FunctionImportName="InsertBon" FunctionName="supermarketDBModel.Store.InsertBon" />
+          <FunctionImportMapping FunctionImportName="InsertIntoProdusBon" FunctionName="supermarketDBModel.Store.InsertIntoProdusBon" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
